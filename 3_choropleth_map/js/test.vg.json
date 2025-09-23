@@ -1,0 +1,12 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "ne_110m_admin_0_countries.topojson",
+    "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+  },
+  "mark": "text",
+  "encoding": {
+    "text": {"field": "properties.NAME"},
+    "tooltip": {"field": "properties.NAME"}
+  }
+}
