@@ -1,8 +1,19 @@
 #symbol_map {
-	top:100px;
-	bottom: 100px; 
+	top:0px;
+	bottom: 0px; 
 	left: 100px;
 	right: 100px;
+	position: relative;
 	/*height: 1000px;
 	width: 800px;*/
+}
+.vega-bindings {
+  display: flex;        /* horizontal layout */
+  gap: 20px;            /* space between sliders */
+  font-family: Arial;
+  position: absolute;   /* position relative to #vis */
+  bottom: 70px;        /* move below chart, adjust as needed */
+  left: 50%;            /* center horizontally */
+  transform: translateX(-50%);
+  z-index: 10;          /* above chart */
 }

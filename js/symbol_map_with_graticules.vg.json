@@ -12,8 +12,7 @@
     "color": "black",
     "anchor": "middle",
     "offset": -55
-
-  },
+    },
     "projection": {"type": "equalEarth"},
     "layer": [
       {
