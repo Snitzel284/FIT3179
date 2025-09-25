@@ -72,7 +72,7 @@
       },
     {
       "data":{
-    "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/Concers.csv",
+    "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/Concerts.csv",
     "format": {"type": "csv"}
     },
       "transform": [
