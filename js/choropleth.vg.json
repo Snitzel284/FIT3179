@@ -90,7 +90,7 @@
         ,
         {"filter": "datum.Year >= From && datum.Year <= To"}
       ],
-      "mark": {"type": "geoshape", "stroke": "white"},
+      "mark": {"type": "geoshape", "stroke": "black"},
       "encoding": {
         "shape":{"field":"geo","type":"geojson"},
         "color": {
