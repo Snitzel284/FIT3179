@@ -41,7 +41,7 @@
       },
       {
         "data": {
-          "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/Final.csv"
+          "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/Concerts.csv"
         },
         "mark": {"type": "circle", "color": "hotpink", "opacity": 0.6, "stroke": "black", "strokeWidth": 0.5},
         "encoding": {
