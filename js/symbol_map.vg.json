@@ -51,9 +51,13 @@
             "aggregate": "count",
             "type": "quantitative",
             "title": "Number of Concerts",
-            "scale": {"range": [0, 1500]},
+            "scale": {
+            "type": "threshold",
+            "range": [1,15,70,300,700,2000],
+            "domain": [1,10,100,500,1000]
+          },
             "legend":{
-              "values": [10,100,500,1000,2000],
+              "values": [1,10,100,500,1000],
               "labelFont": "Arial",
               "labelFontSize": 12,
               "titleFont": "Arial",
