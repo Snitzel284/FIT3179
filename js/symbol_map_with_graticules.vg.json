@@ -28,14 +28,14 @@
     },
       {
         "data": {
-          "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/js/WorldMapWithGraticules.topojson",
+          "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/js/worldMap.topojson",
           "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
         },
         "mark": {"type": "geoshape", "fill": "#f7dbab", "stroke": "black"}
       },
       {
         "data": {
-          "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/js/WorldMapWithGraticules.topojson",
+          "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/js/worldMap.topojson",
           "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
         },
         "mark": {"type": "geoshape", "fill": null, "stroke": "lightgrey"}
