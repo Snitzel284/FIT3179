@@ -5,7 +5,7 @@
   "background": "white",
   "view": {"stroke": null},
   "title": {
-  "text": "Number of Elton John Concerts by Country",
+  "text": "Country Area (km²)",
   "fontSize": 24,
   "font": "Arial",
   "fontWeight": "bold",
@@ -16,23 +16,14 @@
   "projection": {"type": "equalEarth"},
   "params": [
     {
-      "name": "From",
-      "value": 1970,
+      "name": "minArea",
+      "value": 0,
       "bind": {
         "input": "range",
-        "min": 1970,
-        "max": 2024,
-        "step": 1
-      }
-  },
-      {
-      "name": "To",
-      "value": 2024,
-      "bind": {
-        "input": "range",
-        "min": 1970,
-        "max": 2024,
-        "step": 1
+        "min": 0,
+        "max": 2000000,
+        "step": 10000,
+        "name": "Minimum Area (km²)"
       }
   }
 ],
@@ -65,21 +56,20 @@
         "mark": {"type": "geoshape", "fill": "lightgrey", "stroke": "black"},
         "encoding": {
           "tooltip":[
-            {"field":"properties.NAME","type":"nominal","title":"Country"},
-            {"field":"No. Concerts","type":"quantitative"}
+            {"field":"properties.NAME","type":"nominal","title":"Country"}
           ]
         }
       },
     {
       "data":{
-    "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/Concerts.csv",
+    "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/countrySize.csv",
     "format": {"type": "csv"}
     },
       "transform": [
-        {"filter": "datum.Year >= From && datum.Year <= To"},
-        {"aggregate": [{"op":"count","as":"Concerts"}],"groupby":["Country"]},
+        {"filter": "datum.area >= minArea"},
+    
         {
-          "lookup": "Country",
+          "lookup": "country",
           "from": {
             "data": {
               "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/js/worldMap.topojson",
@@ -88,39 +78,25 @@
             "key": "properties.NAME"
           },
           "as":"geo"
-        },
-        {
-          "lookup": "Country",
-          "from": {
-            "data": {
-              "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/countrySize.csv",
-              "format":{"type": "csv"}
-            },
-            "key": "country",
-            "fields":["area"]
-          },
-          "as":"area"
-        },
-        {"calculate": "datum.area/100000","as":"area"},
-        {"calculate": "datum.Concerts","as":"Concerts"}
-
-
+        }
+        
       ],
       "mark": {"type": "geoshape", "stroke": "black"},
       "encoding": {
         "shape":{"field":"geo","type":"geojson"},
         "color": {
-          "field": "Concerts",
+          "field": "area",
           "type": "quantitative",
           "scale": {
           "type": "threshold",
-          "domain": [10,20,50,100,500,1000],
+          "domain": [100000,200000,500000,1000000,2000000,5000000,10000000],
           
-          "range": ["#fde0dd", "#fa9fb5", "#c51b8a", "#7a0177", "#49006a", "#250045","#000000"]
+          "range": ["#fde0dd", "#fa9fb5", "#c51b8a", "#9b017d", "#7a0177", "#49006a", "#250045", "#000000"]
+
           
         },
         "legend":{
-          "title":"No. Concerts",
+          "title":"Area (km²)",
           "orient":"top-right",
           "offset":35,
           "labelFont": "Arial",
@@ -131,8 +107,8 @@
         },
         
         "tooltip": [
-          {"field": "Country", "type": "nominal", "title": "Country"},
-          {"field": "Concerts", "type": "quantitative","title":"No. Concerts"}
+          {"field": "country", "type": "nominal", "title": "Country"},
+          {"field": "area", "type": "quantitative","title":"Area (km²)"}
         ]
       }
     }
