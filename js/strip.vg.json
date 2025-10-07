@@ -1,27 +1,17 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "data": {
-    "values": [
-      {"category": "A", "value": 0.2},
-      {"category": "A", "value": 0.4},
-      {"category": "A", "value": 0.1},
-      {"category": "B", "value": 0.8},
-      {"category": "B", "value": 0.6},
-      {"category": "C", "value": 0.2},
-      {"category": "C", "value": 0.3},
-      {"category": "C", "value": 0.4},
-      {"category": "D", "value": 0.7},
-      {"category": "D", "value": 0.9}
-    ]
-  },
+    "data":{
+    "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/EltonJohnAlbumTracks.csv",
+    "format": {"type": "csv"}
+    },
 
-  "width": 500,
+  "width": 1000,
   "height": 300,
   "encoding": {
-    "x": {"field": "category", "type": "nominal", "axis": {"labelAngle": 0}},
-    "y": {"field": "value", "type": "quantitative", "scale": {"domain": [0, 1]}},
+    "x": {"field": "Album", "type": "nominal", "axis": {"labelAngle": 90,"labelLimit": 300}},
+    "y": {"field": "Danceability", "type": "quantitative", "scale": {"domain": [0, 1]}},
     "color": {
-      "field": "category",
+      "field": "Album",
       "type": "nominal",
       "scale": {
         "range": ["#fde0dd", "#fa9fb5", "#c51b8a", "#9b017d", "#7a0177", "#49006a", "#250045", "#000000"]
@@ -35,7 +25,7 @@
       "mark": {
         "type": "circle",
         "opacity": 0.8,
-        "size": 60
+        "size": 30
       }
     },
     {
@@ -47,9 +37,9 @@
         "size": 30
       },
       "encoding": {
-        "y": {"aggregate": "mean", "field": "value"},
-        "x": {"field": "category", "type": "nominal"},
-        "color": {"field": "category", "type": "nominal"}
+        "y": {"aggregate": "mean", "field": "Danceability", "type": "quantitative"},
+        "x": {"field": "Album", "type": "nominal"},
+        "color": {"field": "Album", "type": "nominal"}
       }
     }
   ]
