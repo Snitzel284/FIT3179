@@ -1,0 +1,132 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data":{
+    "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/EltonJohnAlbumTracks.csv",
+    "format": {"type": "csv"}
+    },
+    "transform": [
+        {"aggregate": [{"op":"mean","field":"Danceability","as":"avg"}],"groupby":["Album","Year"]}],
+
+  "width": 1000,
+  "height": 300,
+  "encoding": {
+    "x": {
+      "field": "Album", "type": "nominal", 
+      "axis": {"labelAngle": 90,"labelLimit": 300,"titleFontSize": 16, "labelFontSize": 12},
+      "sort": {"field": "Year", "op": "min"}
+    },
+    "y": {
+      "field": "Danceability", 
+      "type": "quantitative", 
+      "scale": {"domain": [0, 1]},
+    "axis": {"titleFontSize": 14, "labelFontSize": 12}
+  },
+    "color": {
+      "field": "Album",
+      "type": "nominal",
+      "sort": {"field": "Year", "op": "min"},
+      "scale": {
+        "range": [
+  "#f4c542", "#e59400", "#c85a17", "#b22222", "#e52b50", "#c71585", "#8b008b",
+  "#6a0dad", "#483d8b", "#4169e1", "#1e90ff", "#00ced1", "#20b2aa", "#3cb371",
+  "#2e8b57", "#556b2f", "#bdb76b", "#daa520", "#ffd700", "#ffb6c1", "#fa8072",
+  "#ff69b4", "#db7093", "#8b4513", "#a0522d", "#696969", "#483c32", "#000000"
+]
+
+      },
+      "legend": null
+    }
+  },
+"params": [
+    {
+      "name": "From",
+      "value": 1970,
+      "bind": {
+        "input": "range",
+        "min": 1970,
+        "max": 2024,
+        "step": 1
+      }
+  },
+      {
+      "name": "To",
+      "value": 2024,
+      "bind": {
+        "input": "range",
+        "min": 1970,
+        "max": 2024,
+        "step": 1
+      }
+  }],
+  "layer": [
+    
+{
+      
+      "mark": {
+        "type": "bar",
+        "color": "black",
+        "strokeWidth": 20,
+        "thickness": 3,
+        "size": 30
+      },
+      "encoding": {
+        "y": {"field": "avg", "type": "quantitative","title": "Average Danceability", "scale": {"domain": [0, 1]}},
+        "x": {"field": "Album", "type": "nominal"},
+        "color": {
+        "condition": {
+        "test": "datum.Year >= From && datum.Year <= To",
+        "field": "Album",
+        "type": "nominal"
+      },
+      "value": "lightgray"
+        },
+        
+    
+        "tooltip":[
+          {"field": "Album", "type": "nominal", "title": "Album"},
+          {
+          "field": "avg",
+          "type": "quantitative",
+          "title": "Avg. Danceability",
+          "format": ".3f"
+          },
+          {"field": "Year", "title": "Year"}
+        ]
+      }
+    },
+    {
+      "transform": [
+        {"filter": "datum.Year >= From && datum.Year <= To"},
+        {
+          "window": [{"op": "rank", "as": "ranking"}],
+          "sort": [{"field": "avg", "order": "descending"}]
+        },
+        
+        {"filter": "datum.ranking == 1"},
+        {
+          "calculate": "'The Most Danceable Album; of the Selected Period:; ' + datum['Album']",
+          "as": "text_annotation_raw"
+        },
+        {
+          "calculate": "split(datum.text_annotation_raw, ';')",
+          "as": "text_annotation"
+        }
+
+      ],
+      "mark": {
+        "type": "text",
+        "dy": -40,
+        "color": "red",
+        "fontWeight": "bold",
+        "fontSize": 10
+      },
+      "encoding": {
+        "x": {"field": "Album", "type": "nominal"},
+        "y": {"field": "avg", "type": "quantitative"},
+        "text": {
+          "field": "text_annotation"
+        }
+      }
+    }
+  ]
+}
