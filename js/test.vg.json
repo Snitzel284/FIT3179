@@ -1,0 +1,49 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 500,
+  "data": {
+    "values": [
+      {"album": "Goodbye Yellow Brick Road", "avg": 0.85, "img": "https://upload.wikimedia.org/wikipedia/en/8/86/Elton_John_-_Goodbye_Yellow_Brick_Road.jpg"},
+      {"album": "Honky Château", "avg": 0.73, "img": "https://upload.wikimedia.org/wikipedia/en/f/f0/Elton_John_-_Honky_Ch%C3%A2teau.jpg"}
+    ]
+  },
+  
+  "layer": [
+    {
+      "mark": "bar",
+      "encoding": {
+        "x": {"field": "album", "type": "nominal"},
+        "y": {"field": "avg", "type": "quantitative"},
+        "color": {"field": "album", "type": "nominal"}
+      },
+      
+      "params": [
+        {
+          "name": "hover",
+          
+          "select": {
+            "type": "point",
+            "fields": ["album"],
+            "on": "mouseover",
+            "clear":"mouseout"
+          },
+          "value":0
+        }
+      ]
+    },
+    {
+      "mark": {"type": "image", "width": 100, "height": 100},
+      "encoding": {
+        "x": {"field": "album", "type": "nominal"},
+        "y": {"field": "avg", "type": "quantitative"},
+        "url": {"field": "img", "type": "nominal"},
+        "opacity": {
+          "condition": {"param": "hover", "value": 1},
+          "value": 0
+        }
+        
+
+      }
+    }
+  ]
+}

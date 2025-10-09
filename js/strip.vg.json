@@ -7,8 +7,17 @@
 
   "width": 1000,
   "height": 300,
-  "encoding": {
-    "x": {"field": "Album", "type": "nominal", "axis": {"labelAngle": 90,"labelLimit": 300},"sort": {"field": "year", "op": "min"}},
+
+  "layer": [
+    {
+      "mark": {
+        "type": "circle",
+        "opacity": 1,
+        "size": 30
+      },
+      "encoding": {
+
+    "x": {"field": "Album", "type": "nominal", "axis": {"labelAngle": 90,"labelLimit": 300},"sort": {"field": "Year", "op": "min"}},
     "y": {"field": "Danceability", "type": "quantitative","title":"Danceability", "scale": {"domain": [0, 1]}},
     "color": {
       "field": "Album",
@@ -22,19 +31,10 @@
 ]
       },
       "legend": null,
-      "sort": {"field": "year", "op": "min"}
-    }
-  },
-
-  "layer": [
-    {
-      "mark": {
-        "type": "circle",
-        "opacity": 1,
-        "size": 30
-      },
-      "encoding": {
-        "tooltip": [
+      "sort": {"field": "Year", "op": "min"}
+    },
+  
+    "tooltip": [
       {"field": "Track", "type": "nominal", "title": "Track"},
       {"field": "Album", "type": "nominal", "title": "Album"},
       {"field": "Danceability", "type": "quantitative", "title": "Danceability"}

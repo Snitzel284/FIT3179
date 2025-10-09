@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+</head>
+<body>
+<div id="vis"></div>
+
+<script type="text/javascript">
+const spec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "values": [
+      {
+        "album": "Goodbye Yellow Brick Road",
+        "avg": 0.85,
+        "img": "https://upload.wikimedia.org/wikipedia/en/8/86/Elton_John_-_Goodbye_Yellow_Brick_Road.jpg"
+      },
+      {
+        "album": "Honky Château",
+        "avg": 0.73,
+        "img": "https://upload.wikimedia.org/wikipedia/en/f/f0/Elton_John_-_Honky_Ch%C3%A2teau.jpg"
+      }
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {"field": "album", "type": "nominal"},
+    "y": {"field": "avg", "type": "quantitative"},
+    "color": {"field": "album", "type": "nominal"}
+  }
+};
+
+vegaEmbed('#vis', spec, {actions:false}).then(({view}) => {
+
+  // --- Make the custom tooltip element ---
+  const tooltip = document.createElement('div');
+  tooltip.style.position = 'absolute';
+  tooltip.style.pointerEvents = 'none';
+  tooltip.style.background = 'rgba(255,255,255,0.97)';
+  tooltip.style.border = '1px solid #ccc';
+  tooltip.style.borderRadius = '8px';
+  tooltip.style.padding = '8px';
+  tooltip.style.fontFamily = 'sans-serif';
+  tooltip.style.fontSize = '13px';
+  tooltip.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+  tooltip.style.display = 'none';
+  document.body.appendChild(tooltip);
+
+  // After rendering, select all bar marks
+  view.runAsync().then(() => {
+    const svg = document.querySelector('#vis svg');
+    const bars = svg.querySelectorAll('.mark-rect > path, .mark-rect > rect');
+    bars.forEach((bar, i) => {
+      const datum = spec.data.values[i];
+      bar.addEventListener('mousemove', e => {
+        const img = datum.img ? `<img src="${datum.img}" width="120" style="border-radius:6px;margin-bottom:5px;"><br>` : '';
+        tooltip.innerHTML = `${img}<strong>${datum.album}</strong><br>Danceability: ${(datum.avg*100).toFixed(1)}%`;
+        tooltip.style.left = e.pageX + 10 + 'px';
+        tooltip.style.top  = e.pageY + 10 + 'px';
+        tooltip.style.display = 'block';
+      });
+      bar.addEventListener('mouseleave', () => {
+        tooltip.style.display = 'none';
+      });
+    });
+  });
+});
+</script>
+</body>
+</html>
