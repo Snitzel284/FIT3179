@@ -7,46 +7,290 @@
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
     <!-- CSS file -->
-    <link rel="stylesheet" type="text/css" href="css/styles.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="css/styles2.css" media="all" />
   </head>
-  <body>
-    <div id="symbol_map"></div>
+  <body style="margin: 0; background-color: #f0f0f0">
+    <!-- page background -->
 
-    <script type="text/javascript">
-      const spec2 = "js/strip.vg.json";
-      const htmlTooltipOptions = {
-        theme: "dark", // optional styling theme
-        sanitize: (value) => value, // override sanitization to allow custom HTML
-        formatTooltip: (datum) => {
-          //const datum = value?.datum ?? value;
-          // return your handcrafted HTML string using datum fields
-          if ("Track" in datum) {
+    <!-- Center column -->
+    <div
+      style="
+        background-color: #fff9e6; /* center column color */
+        max-width: 1200px; /* width of center area */
+        margin: 0 auto; /* center horizontally */
+        min-height: 100vh; /* make it span full viewport height */
+        /* optional padding inside */
+      "
+    >
+      <!-- Header container -->
+      <div style="text-align: center; margin-bottom: 20px">
+        <!-- Title centered -->
+        <h1
+          style="
+            font-family: Arial;
+            font-size: 54px;
+            margin-bottom: 50px;
+            margin-top: 0px;
+            background-color: #fff7c2;
+            padding: 30px;
+          "
+        >
+          Elton John
+        </h1>
+
+        <!-- Row with paragraph and image -->
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+            margin-bottom: 50px;
+            max-height: 500px;
+          "
+        >
+          <!-- Paragraph on the left -->
+          <p
+            style="
+              background-color: white;
+              font-family: Arial;
+              font-size: 16px;
+              max-width: 510px;
+              padding-top: 50px;
+              padding-bottom: 50px;
+              padding-left: 20px;
+              padding-right: 20px;
+            "
+          >
+            kjns kjfndsk fsdkfjnsdkfjnsdkfj nsdkjfnsdkjfnsd kjfnsdkjnfkkkkkk
+            kkkkkkkkkkksjn dkfjnsdkjfns kjns kjfndskf sdk fjnsdkf jnsdk fjnsdk
+            jfnsdkjfns dkjfn sdkjnfk kkkkkkk kkkkkkkkksj ndkfjnsdkjfns kjnsk
+            jfnds kfsdkf jnsdkf jnsdkfj nsdkjfnsd kjfns dk jfnsdkjnf kkkkkkkk
+            kkkkkkk kksjndkf jns dkjf ns jfnds kfsdkf jnsdkf jnsdkfj nsdkjfnsd
+            kjfns dk jfnsdkjnf kkkkkkkk jfnds kfsdkf jnsdkf jnsdkfj nsdkjfnsd
+            kjfns dk jfnsdkjnf kkkkkkkk jfnds kfsdkf jnsdkf jnsdkfj nsdkjfnsd
+            kjfns dk jfnsdkjnf kkkkkkkk jfnds kfsdkf jnsdkf jnsdkfj nsdkjfnsd
+            kjfns dk jfnsdkjnf kkkkkkkk jfnds kfsdkf jnsdkf jnsdkfj nsdkjfnsd
+            kjfns dk jfnsdkjnf kkkkkkkk
+          </p>
+
+          <!-- Image on the right -->
+          <img
+            src="https://dt565gqrz3z7y.cloudfront.net/ce/image/-tL5IuCnaamjp5QVgIq-Ng.jpg"
+            alt="Elton John"
+            style="width: 320px; height: 400px"
+          />
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 0px">
+        <!-- Title centered -->
+        <h2
+          style="
+            font-family: Arial;
+            font-size: 34px;
+            margin-top: 0px;
+            background-color: #fff7c2;
+            padding: 30px;
+          "
+        >
+          World Map of Elton John Concerts
+        </h2>
+      </div>
+      <!-- Vega visualization -->
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          margin-top: 0px;
+          margin: 0 auto;
+          max-width: 800px;
+          padding-bottom: 10px;
+        "
+      >
+        <div id="symbol_map" ,style=""></div>
+      </div>
+
+      <div
+        style="
+          position: absolute;
+          top: 1450px;
+          width: 1200px;
+          left: 50%;
+          transform: translateX(-50%);
+          background-color: #fff7c2;
+          color: #333;
+          font-family: Arial, sans-serif;
+          font-size: 34px;
+          font-weight: bold;
+          text-align: center;
+          padding: 30px 0px;
+        "
+      >
+        Traits of Elton John's Albums
+      </div>
+
+      <div style="text-align: center; margin-bottom: 0px">
+        <!-- Title centered -->
+        <h2
+          style="
+            font-family: Arial;
+            font-size: 34px;
+            margin-top: 0px;
+            background-color: #fff7c2;
+            padding: 30px;
+          "
+        >
+          References
+        </h2>
+      </div>
+
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          max-width: 1000px;
+          margin: 0 auto;
+          margin-bottom: 50px;
+          max-height: 600px;
+          align-content: center;
+        "
+      >
+        <!-- Paragraph on the left -->
+        <p
+          style="
+            background-color: white;
+            font-family: Arial;
+            font-size: 16px;
+            width: 1000px;
+            margin-bottom: 40px;
+            padding: 20px 20px;
+            text-align: center;
+          "
+        >
+          ajhbfdhbfdjshbfjsdhb f sjdhbf jsdhbf jsdhbf jsdh bjsdbfjsdhbfjdhbjb
+          fjsd bfjsdbfjsdhbf jshb jhdsbfjsdhbfjshdbfjhsbdjfhbs jdhb
+          ajhbfdhbfdjshbfjsdhb f sjdhbf jsdhbf jsdhbf jsdh bjsdbfjsdhbfjdhbjb
+          fjsd bfjsdbfjsdhbf jshb jhdsbfjsdhbfjshdbfjhsbdjfhbs jdhb
+          ajhbfdhbfdjshbfjsdhb f sjdhbf jsdhbf jsdhbf jsdh bjsdbfjsdhbfjdhbjb
+          fjsd bfjsdbfjsdhbf jshb jhdsbfjsdhbfjshdbfjhsbdjfhbs jdhb
+          ajhbfdhbfdjshbfjsdhb f sjdhbf jsdhbf jsdhbf jsdh bjsdbfjsdhbfjdhbjb
+          fjsd bfjsdbfjsdhbf jshb jhdsbfjsdhbfjshdbfjhsbdjfhbs jdhb
+        </p>
+      </div>
+
+      <script type="text/javascript">
+        const spec2 = "js/strip.vg.json";
+        const covers = {
+          "Tumbleweed Connection":
+            "https://upload.wikimedia.org/wikipedia/en/c/c7/Elton_John_-_Tumbleweed_Connection.jpg",
+          "Elton John":
+            "https://upload.wikimedia.org/wikipedia/en/b/bd/Elton_John_-_Elton_John.jpg",
+          "Honky Chateau":
+            "https://upload.wikimedia.org/wikipedia/en/f/f0/Elton_John_-_Honky_Ch%C3%A2teau.jpg",
+          "Madman Across The Water":
+            "https://upload.wikimedia.org/wikipedia/en/d/d4/Elton_John_-_Madman_Across_the_Water.jpg",
+          "Goodbye Yellow Brick Road":
+            "https://upload.wikimedia.org/wikipedia/en/8/86/Elton_John_-_Goodbye_Yellow_Brick_Road.jpg",
+          "Don't Shoot Me I'm Only The Piano Player":
+            "https://upload.wikimedia.org/wikipedia/en/6/6e/Elton_John_-_Don%27t_Shoot_Me_I%27m_Only_the_Piano_Player.jpg",
+          Caribou:
+            "https://upload.wikimedia.org/wikipedia/en/5/54/Elton_John_-_Caribou.jpg",
+          "Rock Of The Westies":
+            "https://upload.wikimedia.org/wikipedia/en/a/ae/Elton_John_-_Rock_of_the_Westies.jpg",
+          "Blue Moves":
+            "https://upload.wikimedia.org/wikipedia/en/a/ab/Elton_John_-_Blue_Moves.jpg",
+          "A Single Man":
+            "https://upload.wikimedia.org/wikipedia/en/9/9d/Elton_John_-_A_Single_Man.jpg",
+          "Victim Of Love":
+            "https://upload.wikimedia.org/wikipedia/en/a/a9/Album_Victim_of_Love.jpg",
+          "21 At 33":
+            "https://upload.wikimedia.org/wikipedia/en/d/dc/Album_21_at_33.jpg",
+          "The Fox":
+            "https://upload.wikimedia.org/wikipedia/en/a/af/The_fox_%28Elton_John_album%29_coverart.jpg",
+          "Jump Up!":
+            "https://upload.wikimedia.org/wikipedia/en/3/33/Blue_Eyes_-_Elton_John_alt._cover.jpg",
+          "Too Low For Zero":
+            "https://upload.wikimedia.org/wikipedia/en/c/cd/Too_low_for_zero.JPG",
+          "Breaking Hearts":
+            "https://upload.wikimedia.org/wikipedia/en/8/8c/Breaking_hearts.JPG",
+          "Ice On Fire":
+            "https://upload.wikimedia.org/wikipedia/en/b/b7/Ice_on_fire.jpg",
+          "Leather Jackets":
+            "https://upload.wikimedia.org/wikipedia/en/2/2c/Leather_jackets.JPG",
+          "Reg Strikes Back":
+            "https://upload.wikimedia.org/wikipedia/en/e/e5/Reg_strikes_back.JPG",
+          "Sleeping With The Past":
+            "https://upload.wikimedia.org/wikipedia/en/f/f5/Sleeping_with_the_past.JPG",
+          "The One":
+            "https://upload.wikimedia.org/wikipedia/en/0/0d/Elton_John_-_The_One_cover.jpg",
+          "Made In England":
+            "https://upload.wikimedia.org/wikipedia/en/7/7b/Sir_John_Elton_Was_Made_In_England.JPEG",
+          "The Big Picture":
+            "https://upload.wikimedia.org/wikipedia/en/6/60/The_Big_Picture_%28Elton_John_album%29.jpg",
+          "Songs From The West Coast":
+            "https://upload.wikimedia.org/wikipedia/en/6/6d/Songs_from_the_west_coast.JPG",
+          "Peachtree Road":
+            "https://upload.wikimedia.org/wikipedia/en/d/d1/Ptr.jpg",
+          "The Captain and The Kid":
+            "https://upload.wikimedia.org/wikipedia/en/d/d9/Captainkid.jpg",
+          "The Union":
+            "https://upload.wikimedia.org/wikipedia/en/6/6f/TU_cover.jpg",
+          "Wonderful Crazy Night":
+            "https://upload.wikimedia.org/wikipedia/en/9/97/Wonderful_Crazy_Night.jpg",
+        };
+        const htmlTooltipOptions = {
+          theme: "light", // optional styling theme
+          sanitize: (value) => value, // override sanitization to allow custom HTML
+          formatTooltip: (datum) => {
+            //const datum = value?.datum ?? value;
+            // return your handcrafted HTML string using datum fields
+            if ("Track" in datum) {
+              return `
+            <div style="word-wrap: break-word;max-width: 150px; font-family: Arial; font-size: 12px;">
+              <img src= ${covers[datum.Album]} width="150">
+              <div style="flex: 1;">
+                <div><strong>Track:</strong> ${datum.Track}</div><br>
+                <div><strong>Album:</strong> ${datum.Album}</div><br>
+                <div><strong>${datum.Field}:</strong> ${datum.Score}</div>
+              </div>
+            </div>
+          `;
+            }
+            if ("Album" in datum) {
+              return `
+            <div style="word-wrap: break-word;max-width: 150px; font-family: Arial; font-size: 12px;">
+              <img src= ${covers[datum.Album]} width="150">
+              <div style="flex: 1;">
+                <div><strong>Album:</strong> ${datum.Album}</div><br>
+                <div><strong>Avg. ${datum.Field}:</strong> ${datum.Avg}</div>
+              </div>
+            </div>
+          `;
+            }
             return `
-          <div style="word-wrap: break-word;max-width: 150px;">
-            <img src= "https://upload.wikimedia.org/wikipedia/en/8/86/Elton_John_-_Goodbye_Yellow_Brick_Road.jpg" width="150">
-            <div style="flex: 1;">
-              <div><strong>Track:</strong> ${datum.Track}</div><br>
-              <div><strong>Album:</strong> ${datum.Album}</div><br>
-              <div><strong>${datum.Field}:</strong> ${datum.Score}</div>
+          <div style="font-family: Arial; font-size: 12px;">
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              ${Object.entries(datum)
+                .map(
+                  ([key, value]) => `
+                <div><strong>${key}:</strong> ${value}</div>
+                `
+                )
+                .join("")}
             </div>
           </div>
-        `;
-          }
-          return `
-      <table>
-        ${Object.keys(datum)
-          .map((k) => `<tr><th>${k}</th><td>${datum[k]}</td></tr>`)
-          .join("")}
-      </table>
-    `;
-        },
-      };
+      `;
+          },
+        };
 
-      vegaEmbed("#symbol_map", spec2, { tooltip: htmlTooltipOptions })
-        .then(function (result) {
-          // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-        })
-        .catch(console.error);
-    </script>
+        vegaEmbed("#symbol_map", spec2, { tooltip: htmlTooltipOptions })
+          .then(function (result) {
+            // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+          })
+          .catch(console.error);
+      </script>
+    </div>
   </body>
 </html>
