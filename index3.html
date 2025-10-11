@@ -1,26 +1,52 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
-  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
-  
-  
-  <!-- CSS file -->
-  <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
-  
-</head>
-<body>
-<div id="symbol_map"></div>
+  <head>
+    <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-<script type="text/javascript">
+    <!-- CSS file -->
+    <link rel="stylesheet" type="text/css" href="css/styles.css" media="all" />
+  </head>
+  <body>
+    <div id="symbol_map"></div>
 
-  var spec2 = "js/test.vg.json";
-  vegaEmbed('#symbol_map', spec2).then(function(result) {
-    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-  }).catch(console.error);
-</script>
+    <script type="text/javascript">
+      const spec2 = "js/strip.vg.json";
+      const htmlTooltipOptions = {
+        theme: "dark", // optional styling theme
+        sanitize: (value) => value, // override sanitization to allow custom HTML
+        formatTooltip: (datum) => {
+          //const datum = value?.datum ?? value;
+          // return your handcrafted HTML string using datum fields
+          if ("Track" in datum) {
+            return `
+          <div style="word-wrap: break-word;max-width: 150px;">
+            <img src= "https://upload.wikimedia.org/wikipedia/en/8/86/Elton_John_-_Goodbye_Yellow_Brick_Road.jpg" width="150">
+            <div style="flex: 1;">
+              <div><strong>Track:</strong> ${datum.Track}</div><br>
+              <div><strong>Album:</strong> ${datum.Album}</div><br>
+              <div><strong>${datum.Field}:</strong> ${datum.Score}</div>
+            </div>
+          </div>
+        `;
+          }
+          return `
+      <table>
+        ${Object.keys(datum)
+          .map((k) => `<tr><th>${k}</th><td>${datum[k]}</td></tr>`)
+          .join("")}
+      </table>
+    `;
+        },
+      };
 
-</body>
+      vegaEmbed("#symbol_map", spec2, { tooltip: htmlTooltipOptions })
+        .then(function (result) {
+          // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        })
+        .catch(console.error);
+    </script>
+  </body>
 </html>

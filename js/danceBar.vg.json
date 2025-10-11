@@ -1,18 +1,22 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  
   "title": {
   "text": "Average Danceability of Elton John Albums",
   "fontSize": 24
   },
+
+  "width": 1000,
+  "height": 300,
+
     "data":{
     "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/EltonJohnAlbumTracks.csv",
     "format": {"type": "csv"}
     },
+
     "transform": [
         {"aggregate": [{"op":"mean","field":"Danceability","as":"avg"}],"groupby":["Album","Year"]}],
 
-  "width": 1000,
-  "height": 300,
   "encoding": {
     "x": {
       "field": "Album", "type": "nominal", 

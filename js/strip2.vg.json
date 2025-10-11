@@ -1,0 +1,257 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/EltonJohnAlbumTracks.csv",
+    "format": { "type": "csv" }
+  },
+  "params": [
+    {
+      "name": "Graph",
+      "value": "Danceability",
+      "bind": {
+        "input": "select",
+        "options": ["Danceability", "Energy", "graph3"],
+        "name": "Select Graph: "
+      }
+    }
+  ],
+  "vconcat": [
+    {
+      "width": 1000,
+      "height": 300,
+      "layer": [
+        {
+          "title": {
+            "text": "Danceability of Elton John Albums",
+            "fontSize": 20
+          },
+          "mark": {
+            "type": "circle",
+            "opacity": 1,
+            "size": 30
+          },
+          "encoding": {
+            "x": {
+              "field": "Album",
+              "type": "nominal",
+              "axis": {
+                "labelAngle": 90,
+                "labelLimit": 300,
+                "titleFontSize": 16,
+                "labelFontSize": 12
+              },
+              "sort": {
+                "field": "Year",
+                "op": "min"
+              }
+            },
+            "y": {
+              "field": "Danceability",
+              "type": "quantitative",
+              "title": "Danceability",
+              "scale": { "domain": [0, 1] },
+              "axis": { "titleFontSize": 14, "labelFontSize": 12 }
+            },
+            "color": {
+              "field": "Album",
+              "type": "nominal",
+              "scale": {
+                "range": [
+                  "#f4c542",
+                  "#e59400",
+                  "#c85a17",
+                  "#b22222",
+                  "#e52b50",
+                  "#c71585",
+                  "#8b008b",
+                  "#6a0dad",
+                  "#483d8b",
+                  "#4169e1",
+                  "#1e90ff",
+                  "#00ced1",
+                  "#20b2aa",
+                  "#3cb371",
+                  "#2e8b57",
+                  "#556b2f",
+                  "#bdb76b",
+                  "#daa520",
+                  "#ffd700",
+                  "#ffb6c1",
+                  "#fa8072",
+                  "#ff69b4",
+                  "#db7093",
+                  "#8b4513",
+                  "#a0522d",
+                  "#696969",
+                  "#483c32",
+                  "#000000"
+                ]
+              },
+              "legend": null,
+              "sort": { "field": "Year", "op": "min" }
+            },
+
+            "tooltip": [
+              { "field": "Track", "type": "nominal", "title": "Track" },
+              { "field": "Album", "type": "nominal", "title": "Album" },
+              {
+                "field": "Danceability",
+                "type": "quantitative",
+                "title": "Danceability"
+              }
+            ]
+          }
+        },
+        {
+          "mark": {
+            "type": "tick",
+            "color": "black",
+            "strokeWidth": 20,
+            "thickness": 3,
+            "size": 30
+          },
+          "encoding": {
+            "y": {
+              "aggregate": "mean",
+              "field": "Danceability",
+              "type": "quantitative"
+            },
+            "x": { "field": "Album", "type": "nominal" },
+            "color": { "field": "Album", "type": "nominal" },
+            "tooltip": [
+              { "field": "Album", "type": "nominal", "title": "Album" },
+              {
+                "field": "Danceability",
+                "type": "quantitative",
+                "aggregate": "mean",
+                "title": "Avg. Danceability",
+                "format": ".3f"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "width": 1000,
+      "height": 300,
+      "layer": [
+        {
+          "title": {
+            "text": "Energy of Elton John Albums",
+            "fontSize": 20
+          },
+          "mark": {
+            "type": "circle",
+            "opacity": 1,
+            "size": 30
+          },
+          "encoding": {
+            "x": {
+              "field": "Album",
+              "type": "nominal",
+              "axis": {
+                "labelAngle": 90,
+                "labelLimit": 300,
+                "titleFontSize": 16,
+                "labelFontSize": 12
+              },
+              "sort": {
+                "field": "Year",
+                "op": "min"
+              }
+            },
+            "y": {
+              "field": "Energy",
+              "type": "quantitative",
+              "title": "Energy",
+              "scale": { "domain": [0, 1] },
+              "axis": { "titleFontSize": 14, "labelFontSize": 12 }
+            },
+            "color": {
+              "field": "Album",
+              "type": "nominal",
+              "scale": {
+                "range": [
+                  "#f4c542",
+                  "#e59400",
+                  "#c85a17",
+                  "#b22222",
+                  "#e52b50",
+                  "#c71585",
+                  "#8b008b",
+                  "#6a0dad",
+                  "#483d8b",
+                  "#4169e1",
+                  "#1e90ff",
+                  "#00ced1",
+                  "#20b2aa",
+                  "#3cb371",
+                  "#2e8b57",
+                  "#556b2f",
+                  "#bdb76b",
+                  "#daa520",
+                  "#ffd700",
+                  "#ffb6c1",
+                  "#fa8072",
+                  "#ff69b4",
+                  "#db7093",
+                  "#8b4513",
+                  "#a0522d",
+                  "#696969",
+                  "#483c32",
+                  "#000000"
+                ]
+              },
+              "legend": null,
+              "sort": { "field": "Year", "op": "min" }
+            },
+
+            "tooltip": [
+              { "field": "Track", "type": "nominal", "title": "Track" },
+              { "field": "Album", "type": "nominal", "title": "Album" },
+              {
+                "field": "Energy",
+                "type": "quantitative",
+                "title": "Energy"
+              }
+            ]
+          },
+          "transform": [
+            {
+              "filter": "Graph == 'graph1'"
+            }
+          ]
+        },
+        {
+          "mark": {
+            "type": "tick",
+            "color": "black",
+            "strokeWidth": 20,
+            "thickness": 3,
+            "size": 30
+          },
+          "encoding": {
+            "y": {
+              "aggregate": "mean",
+              "field": "Energy",
+              "type": "quantitative"
+            },
+            "x": { "field": "Album", "type": "nominal" },
+            "color": { "field": "Album", "type": "nominal" },
+            "tooltip": [
+              { "field": "Album", "type": "nominal", "title": "Album" },
+              {
+                "field": "Energy",
+                "type": "quantitative",
+                "aggregate": "mean",
+                "title": "Avg. Energy",
+                "format": ".3f"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

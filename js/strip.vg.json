@@ -1,69 +1,442 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "data":{
-    "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/EltonJohnAlbumTracks.csv",
-    "format": {"type": "csv"}
-    },
 
-  "width": 1000,
-  "height": 300,
-
-  "layer": [
+  "params": [
     {
-      "mark": {
-        "type": "circle",
-        "opacity": 1,
-        "size": 30
-      },
-      "encoding": {
-
-    "x": {"field": "Album", "type": "nominal", "axis": {"labelAngle": 90,"labelLimit": 300},"sort": {"field": "Year", "op": "min"}},
-    "y": {"field": "Danceability", "type": "quantitative","title":"Danceability", "scale": {"domain": [0, 1]}},
-    "color": {
-      "field": "Album",
-      "type": "nominal",
-      "scale": {
-        "range": [
-  "#f4c542", "#e59400", "#c85a17", "#b22222", "#e52b50", "#c71585", "#8b008b",
-  "#6a0dad", "#483d8b", "#4169e1", "#1e90ff", "#00ced1", "#20b2aa", "#3cb371",
-  "#2e8b57", "#556b2f", "#bdb76b", "#daa520", "#ffd700", "#ffb6c1", "#fa8072",
-  "#ff69b4", "#db7093", "#8b4513", "#a0522d", "#696969", "#483c32", "#000000"
-]
-      },
-      "legend": null,
-      "sort": {"field": "Year", "op": "min"}
-    },
-  
-    "tooltip": [
-      {"field": "Track", "type": "nominal", "title": "Track"},
-      {"field": "Album", "type": "nominal", "title": "Album"},
-      {"field": "Danceability", "type": "quantitative", "title": "Danceability"}
-    ]
+      "name": "Field",
+      "value": "Danceability",
+      "bind": {
+        "input": "select",
+        "options": [
+          "Danceability",
+          "Energy",
+          "Acousticness",
+          "Liveness",
+          "Valence"
+        ],
+        "name": "Select Trait: "
+      }
     }
-},    
-{
-      "mark": {
-        "type": "tick",
-        "color": "black",
-        "strokeWidth": 20,
-        "thickness": 3,
-        "size": 30
+  ],
+
+  "vconcat": [
+    {
+      "title": {
+        "text": "World Map of Elton John Concerts",
+        "fontSize": 24,
+        "offset": -20,
+        "font": "Arial"
       },
+      "view": { "stroke": null },
+      "width": 1000,
+      "height": 600,
+      "projection": { "type": "equalEarth" },
+      "layer": [
+        {
+          "data": {
+            "sphere": true
+          },
+          "mark": {
+            "type": "geoshape",
+            "fill": "#cce6ff",
+            "stroke": null
+          }
+        },
+        {
+          "data": {
+            "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/js/worldMap.topojson",
+            "format": { "type": "topojson", "feature": "ne_110m_graticules_30" }
+          },
+          "mark": { "type": "geoshape", "fill": null, "stroke": "lightgrey" }
+        },
+        {
+          "data": {
+            "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/js/worldMap.topojson",
+            "format": {
+              "type": "topojson",
+              "feature": "ne_110m_admin_0_countries"
+            }
+          },
+          "transform": [{ "calculate": "0", "as": "No. Concerts" }],
+          "mark": {
+            "type": "geoshape",
+            "fill": "lightgrey",
+            "stroke": "black"
+          },
+          "encoding": {
+            "tooltip": [
+              {
+                "field": "properties.NAME",
+                "type": "nominal",
+                "title": "Country"
+              },
+              { "field": "No. Concerts", "type": "quantitative" }
+            ]
+          }
+        },
+        {
+          "data": {
+            "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/Concerts.csv",
+            "format": { "type": "csv" }
+          },
+          "transform": [
+            { "filter": { "param": "time_brush" } },
+            {
+              "aggregate": [{ "op": "count", "as": "Concerts" }],
+              "groupby": ["Country"]
+            },
+            {
+              "lookup": "Country",
+              "from": {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/js/worldMap.topojson",
+                  "format": {
+                    "type": "topojson",
+                    "feature": "ne_110m_admin_0_countries"
+                  }
+                },
+                "key": "properties.NAME"
+              },
+              "as": "geo"
+            },
+            {
+              "lookup": "Country",
+              "from": {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/countrySize.csv",
+                  "format": { "type": "csv" }
+                },
+                "key": "country",
+                "fields": ["area"]
+              },
+              "as": "area"
+            },
+            { "calculate": "datum.area/100000", "as": "area" },
+            { "calculate": "datum.Concerts", "as": "Concerts" }
+          ],
+          "mark": { "type": "geoshape", "stroke": "black" },
+          "encoding": {
+            "shape": { "field": "geo", "type": "geojson" },
+            "color": {
+              "field": "Concerts",
+              "type": "quantitative",
+              "scale": {
+                "type": "threshold",
+                "domain": [10, 20, 50, 100, 500, 1000],
+
+                "range": [
+                  "#fde0dd",
+                  "#fa9fb5",
+                  "#c51b8a",
+                  "#7a0177",
+                  "#49006a",
+                  "#250045",
+                  "#000000"
+                ]
+              },
+              "legend": {
+                "title": "No. Concerts",
+                "orient": "top-right",
+                "offset": 25,
+                "labelFont": "Arial",
+                "labelFontSize": 12,
+                "titleFont": "Arial",
+                "titleFontSize": 14
+              }
+            },
+
+            "tooltip": [
+              { "field": "Country", "type": "nominal", "title": "Country" },
+              {
+                "field": "Concerts",
+                "type": "quantitative",
+                "title": "No. Concerts"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/Concerts.csv",
+        "format": { "type": "csv" }
+      },
+      "params": [
+        {
+          "name": "time_brush",
+          "select": { "type": "interval", "encodings": ["x"] }
+        }
+      ],
+      "title": {
+        "text": "Number of Elton John Concerts by Year (Use To Filter)",
+        "fontSize": 16,
+        "font": "Arial"
+      },
+      "width": 1000,
+      "height": 70,
+      "mark": "line",
       "encoding": {
-        "y": {"aggregate": "mean", "field": "Danceability", "type": "quantitative"},
-        "x": {"field": "Album", "type": "nominal"},
-        "color": {"field": "Album", "type": "nominal"},
-        "tooltip":[
-          {"field": "Album", "type": "nominal", "title": "Album"},
-          {
-          "field": "Danceability",
+        "x": {
+          "field": "Year",
+          "type": "temporal",
+          "timeUnit": "year",
+          "axis": {
+            "labelAngle": 0,
+            "labelLimit": 300,
+            "titleFontSize": 16,
+            "labelFontSize": 12,
+            "title": "Year",
+            "titleFont": "Arial",
+            "labelFont": "Arial"
+          },
+          "sort": {
+            "field": "Year",
+            "op": "min"
+          }
+        },
+        "y": {
+          "field": "Year",
+          "aggregate": "count",
           "type": "quantitative",
-          "aggregate": "mean",
-          "title": "Average Danceability",
-          "format": ".3f"
+          "title": "No. of Concerts",
+          "axis": {
+            "titleFontSize": 12,
+            "labelFontSize": 12,
+            "titleFont": "Arial",
+            "labelFont": "Arial"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "Year",
+            "type": "temporal",
+            "title": "Year",
+            "format": "%Y"
+          },
+          {
+            "field": "Year",
+            "aggregate": "count",
+            "type": "quantitative",
+            "title": "No. of Concerts"
           }
         ]
       }
+    },
+    { "mark": "bar", "height": 200, "view": { "stroke": null } },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/EltonJohnAlbumTracks.csv",
+        "format": { "type": "csv" }
+      },
+      "width": 1000,
+      "height": 300,
+
+      "layer": [
+        {
+          "transform": [
+            {
+              "calculate": "datum[Field]",
+              "as": "dynamicField"
+            },
+            {
+              "calculate": "Field",
+              "as": "Field"
+            }
+          ],
+          "title": {
+            "text": { "expr": "Field + ' of Elton John Albums'" },
+            "fontSize": 20,
+            "font": "Arial"
+          },
+
+          "mark": {
+            "type": "circle",
+            "opacity": 1,
+            "size": 30
+          },
+          "encoding": {
+            "detail": [
+              {
+                "field": "Year",
+                "type": "temporal",
+                "timeUnit": "year"
+              },
+              {
+                "field": "Field",
+                "type": "nominal"
+              }
+            ],
+            "x": {
+              "field": "Album",
+              "type": "nominal",
+              "sort": {
+                "field": "Year",
+                "op": "min"
+              },
+              "axis": {
+                "labelAngle": 90,
+                "labelLimit": 300,
+                "titleFontSize": 16,
+                "labelFontSize": 12,
+                "titleFont": "Arial",
+                "labelFont": "Arial"
+              }
+            },
+            "y": {
+              "field": "dynamicField",
+              "type": "quantitative",
+
+              "axis": {
+                "titleFontSize": 14,
+                "labelFontSize": 12,
+                "titleFont": "Arial",
+                "labelFont": "Arial",
+                "title": { "expr": "Field" }
+              },
+              "scale": { "domain": [0, 1] }
+            },
+            "color": {
+              "condition": {
+                "param": "time_brush",
+                "field": "Album",
+                "type": "nominal",
+                "scale": {
+                  "range": [
+                    "#f4c542",
+                    "#e59400",
+                    "#c85a17",
+                    "#b22222",
+                    "#e52b50",
+                    "#c71585",
+                    "#8b008b",
+                    "#6a0dad",
+                    "#483d8b",
+                    "#4169e1",
+                    "#1e90ff",
+                    "#00ced1",
+                    "#20b2aa",
+                    "#3cb371",
+                    "#2e8b57",
+                    "#556b2f",
+                    "#bdb76b",
+                    "#daa520",
+                    "#ffd700",
+                    "#ffb6c1",
+                    "#fa8072",
+                    "#ff69b4",
+                    "#db7093",
+                    "#8b4513",
+                    "#a0522d",
+                    "#696969",
+                    "#483c32",
+                    "#000000"
+                  ]
+                },
+                "legend": null,
+                "sort": { "field": "Year", "op": "min" }
+              },
+              "value": "lightgray"
+            },
+
+            "tooltip": [
+              { "field": "Track", "type": "nominal", "title": "Track" },
+              { "field": "Album", "type": "nominal", "title": "Album" },
+              {
+                "field": "dynamicField",
+                "type": "quantitative",
+                "title": "Score"
+              },
+              { "field": "Field", "type": "nominal" }
+            ]
+          }
+        },
+        {
+          "transform": [
+            {
+              "calculate": "datum[Field]",
+              "as": "dynamicField"
+            }
+          ],
+          "mark": {
+            "type": "tick",
+            "color": "black",
+            "strokeWidth": 20,
+            "thickness": 3,
+            "size": 30
+          },
+          "encoding": {
+            "detail": {
+              "field": "Year",
+              "type": "temporal",
+              "timeUnit": "year"
+            },
+            "y": {
+              "field": "dynamicField",
+              "aggregate": "mean",
+              "type": "quantitative"
+            },
+            "x": {
+              "field": "Album",
+              "type": "nominal",
+              "sort": { "field": "Year", "op": "min" }
+            },
+            "color": {
+              "condition": {
+                "param": "time_brush",
+                "field": "Album",
+                "type": "nominal",
+                "scale": {
+                  "range": [
+                    "#f4c542",
+                    "#e59400",
+                    "#c85a17",
+                    "#b22222",
+                    "#e52b50",
+                    "#c71585",
+                    "#8b008b",
+                    "#6a0dad",
+                    "#483d8b",
+                    "#4169e1",
+                    "#1e90ff",
+                    "#00ced1",
+                    "#20b2aa",
+                    "#3cb371",
+                    "#2e8b57",
+                    "#556b2f",
+                    "#bdb76b",
+                    "#daa520",
+                    "#ffd700",
+                    "#ffb6c1",
+                    "#fa8072",
+                    "#ff69b4",
+                    "#db7093",
+                    "#8b4513",
+                    "#a0522d",
+                    "#696969",
+                    "#483c32",
+                    "#000000"
+                  ]
+                },
+                "legend": null,
+                "sort": { "field": "Year", "op": "min" }
+              },
+              "value": "lightgray"
+            },
+            "tooltip": [
+              { "field": "Album", "type": "nominal", "title": "Album" },
+              {
+                "field": "dynamicField",
+                "aggregate": "mean",
+                "type": "quantitative",
+                "title": "Avg. Score",
+                "format": ".3f"
+              }
+            ]
+          }
+        }
+      ]
     }
-  ]
+  ],
+  "spacing": -50
 }
