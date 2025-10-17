@@ -218,7 +218,7 @@
             "field": "Year",
             "aggregate": "count",
             "type": "quantitative",
-            "title": "No. of Concerts"
+            "title": "No. Concerts"
           }
         ]
       }
