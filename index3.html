@@ -23,7 +23,7 @@
         width: 1200px;
         margin: 0 auto;
         border-radius: 50px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* deep shadow for “pop out” effect */
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
       "
     >
       <!-- Header container -->
@@ -49,13 +49,13 @@
         <div
           style="
             display: grid;
-            grid-template-columns: 1fr 1fr; /* fixed column widths */
+            grid-template-columns: 1fr 1fr;
             align-items: center;
             max-width: 1000px;
             margin: 0 auto;
             margin-bottom: 50px;
             max-height: 450px;
-            gap: 50px; /* small gap between text and image */
+            gap: 50px;
           "
         >
           <!-- Paragraph on the left -->
@@ -64,7 +64,7 @@
               background-color: white;
               font-family: Arial;
               font-size: 17px;
-              width: 400px; /* fixed width */
+              width: 400px;
               padding: 40px 40px;
               margin-right: 50px;
               margin-left: 20px;
@@ -121,25 +121,27 @@
         >
           <div id="map_traits"></div>
         </div>
-
-        <div
-          style="
-            position: absolute;
-            top: 1570px; /* fixed vertical position */
-            width: 1200px; /* fixed width */
-            height: 100px; /* fixed height */
-            background-color: #fff7c2;
-            color: #333;
-            font-family: Arial, sans-serif;
-            font-size: 34px;
-            font-weight: bold;
-            text-align: center;
-            line-height: 100px; /* vertically center text */
-            margin: 0; /* remove any default margins */
-          "
-        >
-          Traits of Elton John's Albums
+        <div style="position: relative">
+          <div
+            style="
+              position: absolute;
+              bottom: 870px;
+              width: 1200px;
+              height: 100px;
+              background-color: #fff7c2;
+              color: #333;
+              font-family: Arial, sans-serif;
+              font-size: 34px;
+              font-weight: bold;
+              text-align: center;
+              line-height: 100px;
+              margin: 0;
+            "
+          >
+            Traits of Elton John's Albums
+          </div>
         </div>
+
         <div style="text-align: center; margin-bottom: 0px">
           <!-- Title centered -->
           <h2
@@ -158,13 +160,13 @@
         <div
           style="
             display: grid;
-            grid-template-columns: 1fr 1fr; /* 2 columns */
-            grid-template-rows: 2fr 1fr; /* top row taller than bottom row */
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 2fr 1fr;
             max-width: 1000px;
             margin: 0 auto;
             margin-bottom: 50px;
-            height: 550px; /* total container height */
-            gap: 30px; /* optional gap */
+            height: 550px;
+            gap: 30px;
           "
         >
           <div style="margin-left: -80px"><div id="mode_pie"></div></div>
@@ -218,8 +220,8 @@
             margin-bottom: 50px;
             max-height: 600px;
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Correct property */
-            gap: 20px; /* Optional: adds space between boxes */
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
           "
         >
           <div
