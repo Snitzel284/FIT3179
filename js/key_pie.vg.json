@@ -1,0 +1,66 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 400,
+  "height": 400,
+  "background": "#fff9e6",
+  "data": {
+    "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/EltonJohnAlbumTracks.csv",
+    "format": { "type": "csv" }
+  },
+
+  "transform": [
+    {
+      "aggregate": [{ "op": "count", "as": "count" }],
+      "groupby": ["Key"]
+    },
+    { "calculate": "datum.count / 361 * 100", "as": "count" },
+    {
+      "calculate": "datum.Key == 0 ? 'C' : datum.Key == 1 ? 'C#' : datum.Key == 2 ? 'D' : datum.Key == 3 ? 'D#' : datum.Key == 4 ? 'E' : datum.Key == 5 ? 'F' : datum.Key == 6 ? 'F#' : datum.Key == 7 ? 'G' : datum.Key == 8 ? 'G#' : datum.Key == 9 ? 'A' : datum.Key == 10 ? 'A#' : 'B'",
+      "as": "KeyLetter"
+    }
+  ],
+
+  "mark": { "type": "arc" },
+
+  "encoding": {
+    "theta": {
+      "field": "count",
+      "type": "quantitative"
+    },
+
+    "color": {
+      "field": "KeyLetter",
+      "type": "nominal",
+      "legend": {
+        "title": "Key",
+        "orient": "left",
+        "labelFontSize": 12,
+        "titleFontSize": 14,
+        "labelFont": "Arial",
+        "titleFont": "Arial"
+      },
+      "sort": "ascending",
+      "scale": {
+        "range": [
+          "#483d8b",
+          "#8b008b",
+          "#f4c542",
+          "#00ced1",
+          "#b22222",
+          "#6a0dad",
+          "#c71585",
+          "#e52b50",
+          "#4169e1",
+          "#e59400",
+          "#1e90ff",
+          "#c85a17"
+        ]
+      }
+    },
+    "order": { "field": "count", "type": "quantitative", "sort": "descending" },
+    "tooltip": [
+      { "field": "KeyLetter", "type": "nominal" },
+      { "field": "count", "type": "quantitative", "format": ".1f" }
+    ]
+  }
+}

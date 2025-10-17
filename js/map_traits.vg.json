@@ -24,7 +24,9 @@
       "view": { "stroke": null },
       "width": 1000,
       "height": 500,
-      "projection": { "type": "equalEarth" },
+      "projection": {
+        "type": "equalEarth"
+      },
       "layer": [
         {
           "data": {
@@ -116,16 +118,17 @@
               "type": "quantitative",
               "scale": {
                 "type": "threshold",
-                "domain": [10, 20, 50, 100, 500, 1000],
+                "domain": [10, 20, 50, 100, 200, 500, 1000],
 
                 "range": [
-                  "#fde0dd",
-                  "#fa9fb5",
-                  "#c51b8a",
-                  "#7a0177",
-                  "#49006a",
-                  "#250045",
-                  "#000000"
+                  "#f5e6ff",
+                  "#e5c6ff",
+                  "#d3a3ff",
+                  "#bf7dff",
+                  "#a857ff",
+                  "#8b2aff",
+                  "#6610d9",
+                  "#3c007a"
                 ]
               },
               "legend": {
@@ -165,7 +168,7 @@
       ],
       "title": {
         "text": "Number of Elton John Concerts by Year (Use To Filter)",
-        "fontSize": 16,
+        "fontSize": 18,
         "font": "Arial"
       },
       "width": 1000,
@@ -196,9 +199,9 @@
           "field": "Year",
           "aggregate": "count",
           "type": "quantitative",
-          "title": "No. of Concerts",
+          "title": "No. Concerts",
           "axis": {
-            "titleFontSize": 12,
+            "titleFontSize": 14,
             "labelFontSize": 12,
             "titleFont": "Arial",
             "labelFont": "Arial"
@@ -277,13 +280,13 @@
                 "op": "min"
               },
               "axis": {
-                "labelAngle": 90,
+                "labelAngle": 45,
                 "labelLimit": 300,
                 "titleFontSize": 16,
                 "labelFontSize": 12,
                 "titleFont": "Arial",
                 "labelFont": "Arial",
-                "titlePadding": 50
+                "titlePadding": 10
               }
             },
             "y": {
@@ -452,48 +455,96 @@
       ]
     },
     {
-      "data": {
-        "values": {
-          "Danceability": "Danceability is a measure from 0.0 to 1.0 describing how suitable a track is for dancing. Tracks with high danceability values \n(0.7 or above) are typically upbeat, fast, and energetic. Tracks with low danceability values (0.3 or below) are usually slower, \nquieter, and less rhythmic.",
-          "Energy": "Energy is a measure from 0.0 to 1.0 that represents a perceptual measure of intensity and activity. Typically, energetic tracks feel \nfast, loud, and noisy. For example, death metal has high energy, while a Bach prelude scores low on the scale. Perceptual features \ncontributing to this attribute include dynamic range, perceived loudness, timbre, onset rate, and general entropy.",
-          "Acousticness": "Acousticness is a confidence measure from 0.0 to 1.0 of whether the track is acoustic. A value of 1.0 represents high confidence \nthat the track is acoustic.",
-          "Liveness": "Liveness detects the presence of an audience in the recording. Higher liveness values represent an increased probability that the \ntrack was performed live. A value above 0.8 provides strong likelihood that the track is live.",
-          "Valence": "A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive \n(e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry)."
-        }
-      },
-      "transform": [
-        {
-          "calculate": "datum[Field]",
-          "as": "dynamicField"
-        },
-        {
-          "calculate": "replace(datum.dynamicField, '(.{800})', '\\n')",
-          "as": "wrapped"
-        }
-      ],
-      "mark": {
-        "type": "text",
-        "font": "Arial",
-        "fontSize": 16,
-        "fontWeight": "normal",
-        "color": "black",
-        "align": "center",
-        "limit": 940,
-        "lineBreak": "\n",
-        "yOffset": -15
-      },
-      "height": 100,
+      "mark": "text",
+      "height": -30,
       "width": 1000,
-      "view": { "stroke": null, "fill": "white" },
+      "view": { "stroke": null, "fill": "#FFF9E6" },
       "title": {
         "text": { "expr": "Field" },
-        "fontSize": 25,
+        "fontSize": 35,
         "font": "Arial"
-      },
-      "encoding": {
-        "text": { "field": "dynamicField", "type": "nominal" },
-        "tooltip": null
       }
+    },
+    {
+      "hconcat": [
+        {
+          "data": {
+            "values": {
+              "Danceability": "\nDanceability is a measure from 0.0 to 1.0 describing\nhow suitable a track is for dancing. Tracks with high\ndanceability values (0.7 or above) are typically upbeat, fast,\nand energetic. Tracks with low danceability values\n(0.3 or below) are usually slower, quieter, and less rhythmic.",
+              "Energy": "Energy is a measure from 0.0 to 1.0 that represents a\nperceptual measure of intensity and activity. Typically, energetic\ntracks feel fast, loud, and noisy. For example, death metal has\nhigh energy, while a Bach prelude scores low on the scale.\nFeatures contributing to this attribute include dynamic range,\nperceived loudness, timbre, onset rate, and general entropy.",
+              "Acousticness": "\n\nAcousticness is a confidence measure from 0.0 to 1.0\nof whether the track is acoustic. A value of 1.0\nrepresents high confidence that the track is acoustic.",
+              "Liveness": "\nLiveness detects the presence of an audience in the\nrecording. Higher liveness values represent an increased\nprobability that the track was performed live. A value above\n0.8 provides strong likelihood that the track is live.",
+              "Valence": "\nA measure from 0.0 to 1.0 describing the musical positiveness\nconveyed by a track. Tracks with high valence sound more\npositive (e.g. happy, cheerful, euphoric), while tracks with\nlow valence sound more negative (e.g. sad, depressed, angry)."
+            }
+          },
+          "transform": [
+            {
+              "calculate": "datum[Field]",
+              "as": "dynamicField"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "font": "Arial",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "black",
+            "align": "center",
+            "limit": 940,
+            "lineBreak": "\n",
+            "yOffset": -50
+          },
+          "height": 150,
+          "width": 475,
+          "view": { "stroke": null, "fill": "white" },
+          "encoding": {
+            "text": { "field": "dynamicField", "type": "nominal" },
+            "tooltip": null
+          }
+        },
+        {
+          "data": {
+            "values": {
+              "Danceability": "\nElton John's music often features upbeat tempos,\nrhythmic patterns, and catchy melodies that make his tracks\nsuitable for dancing. Songs like 'Crocodile Rock' and\n'I'm Still Standing' exemplify high danceability with their\nenergetic beats and lively arrangements.",
+              "Energy": "\nElton John's music is characterised by its dynamic range\nand vibrant instrumentation, contributing to high energy levels.\nTracks like 'Saturday Night's Alright for Fighting' and\n'Bennie and the Jets' showcase energetic performances\nwith powerful vocals and lively arrangements.",
+              "Acousticness": "\nWhile Elton John is known for his piano-driven ballads,\nhis music often incorporates a blend of acoustic and electric\nelements. Songs like 'Your Song' and 'Tiny Dancer' feature\nacoustic instrumentation, highlighting his versatility as an artist.",
+              "Liveness": "\nElton John's live performances are renowned for their\nenergy and audience engagement. Live recordings of songs\nlike 'Restless' and 'I'm Still Standing' capture the\naudience's excitement at his Wembley Stadium concert,\nand therefore these showcase high liveness values.",
+              "Valence": "\nElton John's music often conveys positive emotions\nthrough uplifting melodies and heartfelt lyrics.\nSongs like 'Can You Feel the Love Tonight' and\n'Circle of Life' evoke feelings of joy and optimism,\nreflecting high valence in his musical style."
+            }
+          },
+          "transform": [
+            {
+              "calculate": "datum[Field]",
+              "as": "dynamicField"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "font": "Arial",
+            "fontSize": 16,
+            "fontWeight": "normal",
+            "color": "black",
+            "align": "center",
+            "limit": 940,
+            "lineBreak": "\n",
+            "yOffset": -50
+          },
+          "height": 150,
+          "width": 475,
+          "view": { "stroke": null, "fill": "white" },
+          "encoding": {
+            "text": { "field": "dynamicField", "type": "nominal" },
+            "tooltip": null
+          }
+        }
+      ],
+      "spacing": 50
+    },
+    {
+      "mark": "text",
+      "height": 5,
+      "width": 1000,
+      "view": { "stroke": null, "fill": "#FFF9E6" }
     }
   ],
 

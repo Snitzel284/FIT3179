@@ -1,0 +1,53 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 400,
+  "height": 400,
+  "view": { "stroke": null },
+  "background": "#fff9e6",
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/Snitzel284/FIT3179/main/data/EltonJohnAlbumTracks.csv",
+        "format": { "type": "csv" }
+      },
+      "transform": [
+        { "calculate": "datum.Mode==1 ? 'Major' : 'Minor'", "as": "Mode" },
+        {
+          "aggregate": [{ "op": "count", "as": "count" }],
+          "groupby": ["Mode"]
+        },
+        { "calculate": "datum.count / 361 * 100", "as": "count" }
+      ],
+      "mark": "arc",
+      "encoding": {
+        "theta": {
+          "field": "count",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "Mode",
+          "type": "nominal",
+          "scale": { "range": ["#6610d9", "#d3a3ff"] },
+          "legend": {
+            "title": "Mode",
+            "orient": "left",
+            "labelFontSize": 12,
+            "titleFontSize": 14,
+            "labelFont": "Arial",
+            "titleFont": "Arial"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "count",
+            "type": "quantitative",
+            "format": ".1f"
+          },
+          {
+            "field": "Mode"
+          }
+        ]
+      }
+    }
+  ]
+}
